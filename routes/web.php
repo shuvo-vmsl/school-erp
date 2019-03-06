@@ -33,3 +33,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//asad 6-3-19
+Route::get('/auth', 'HomeController@auth')->name('auth');
