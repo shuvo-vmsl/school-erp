@@ -35,4 +35,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 //asad 6-3-19
-Route::get('/auth', 'HomeController@auth')->name('auth');
+//Route::get('/dhuk', 'HomeController@dhuk')->name('dhuk');
+Route::get('/auth', function () {
+    return view('admin.auth.auth');
+});

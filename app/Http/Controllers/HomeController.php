@@ -26,7 +26,7 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function auth(){
-        return view('admin/auth/auth');
+    public function dhuk(){
+        return view('admin.dhuk.dhuk');
     }
 }
