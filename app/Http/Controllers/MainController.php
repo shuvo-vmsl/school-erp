@@ -16,12 +16,14 @@ class MainController extends Controller
     }
     function checklogin(Request $request){
         $this->validate($request, [
-            'name'   => 'required',
+            'school_id' => 'required',
+            'user_id'   => 'required',
             'password'  => 'required|alphaNum|min:3'
         ]);
 
         $user_data = array(
-            'name'  => $request->get('name'),
+            'school_id'=> $request->get('school_id'),
+            'user_id'  => $request->get('user_id'),
             'password' => $request->get('password')
         );
 
