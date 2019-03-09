@@ -39,3 +39,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/auth', function () {
     return view('admin.auth.auth');
 });
+
+Route::get('/auth', 'MainController@index');
+Route::get('/adhome', 'MainController@adhome');
+Route::post('/auth/checklogin', 'MainController@checklogin');
+Route::get('auth/successlogin', 'MainController@successlogin');
+Route::get('auth/logout', 'MainController@logout');
