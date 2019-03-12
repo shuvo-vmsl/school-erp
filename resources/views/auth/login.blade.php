@@ -34,11 +34,11 @@
 
             @if (count($errors) > 0)
                 <div class="alert alert-danger">
-                <ul>
-                @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-                </ul>
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
             @endif
             <div class="card">
@@ -49,19 +49,19 @@
                     <div class="p-3">
                         <h4 class="text-muted font-18 m-b-5 text-center">Welcome Back !</h4>
                         <p class="text-muted text-center">Sign in to continue to School.</p>
-                        <form class="form-horizontal m-t-30" method="post" action="{{ url('/auth/checklogin') }}">
+                        <form class="form-horizontal m-t-30" data-toggle="validator" role="form" method="post" action="{{ url('/login') }}">
                         {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="school_id"><i class="fa fa-university"></i> School ID</label>
-                                <input type="text" class="form-control" name="school_id" id="school_id" placeholder="Enter School ID">
+                                <input type="text" class="form-control" name="school_id" id="school_id" placeholder="Enter School ID" required>
                             </div>
                             <div class="form-group">
                                 <label for="user_id"><i class="fa fa-user"></i> User ID</label>
-                                <input type="text" class="form-control" name="user_id" id="user_id" placeholder="Enter User ID">
+                                <input type="text" class="form-control" name="user_id" id="user_id" placeholder="Enter User ID" required>
                             </div>
                             <div class="form-group">
                                 <label for="password"><i class="fa fa-key"></i> Password</label>
-                                <input type="password" class="form-control" name="password" id="password" placeholder="Enter password">
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Enter password" required>
                             </div>
                             <div class="form-group row m-t-20">
                                 <div class="col-sm-6">

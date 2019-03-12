@@ -65,7 +65,8 @@ trait AuthenticatesUsers
     {
         $request->validate([
             $this->username() => 'required|string',
-            'password' => 'required|string',
+            'school_id'=>'required|string',
+            'password' => 'required|string|min:3',
         ]);
     }
 
@@ -90,7 +91,7 @@ trait AuthenticatesUsers
      */
     protected function credentials(Request $request)
     {
-        return $request->only($this->username(), 'password');
+        return $request->only($this->username(),'school_id', 'password');
     }
 
     /**
@@ -143,7 +144,7 @@ trait AuthenticatesUsers
      */
     public function username()
     {
-        return 'email';
+        return 'user_id';
     }
 
     /**
