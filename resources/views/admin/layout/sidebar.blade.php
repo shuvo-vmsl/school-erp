@@ -33,8 +33,6 @@
                                 </ul>
                             </li>
 
-
-
                             <li class="has_sub">
                                 <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-email-outline"></i><span> Email <span class="pull-right"><i class="mdi mdi-chevron-right"></i></span> </span></a>
                                 <ul class="list-unstyled">
@@ -42,6 +40,13 @@
                                     <li><a href="email-read.html">Email Read</a></li>
                                     <li><a href="email-compose.html">Email Compose</a></li>
                                 </ul>
+                            </li>
+
+                            <li>
+                                <a href="{{ url('UserManagement') }}" class="waves-effect"><i class="mdi mdi-account-multiple"></i><span>User Management</span></a>
+                            </li>
+                            <li>
+                                <a href="{{ url('SchoolManagement') }}" class="waves-effect"><i class="mdi mdi-castle"></i><span>School Management</span></a>
                             </li>
 
                         </ul>
