@@ -43,3 +43,7 @@ Route::get('/blank', function () {
 //for school management 
 Route::get('/SchoolManagement', 'SchoolController@index');
 Route::resource('SchoolManagements', 'SchoolController');
+
+//for School's class
+Route::get('/Class', 'SchoolClassController@index');
+Route::resource('SchoolClasss', 'SchoolClassController');
