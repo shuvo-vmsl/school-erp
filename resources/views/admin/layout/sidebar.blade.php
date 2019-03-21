@@ -51,6 +51,12 @@
                 <li>
                     <a href="{{ url('Class') }}" class="waves-effect"><i class="mdi mdi-polaroid"></i><span>Class</span></a>
                 </li>
+                <li>
+                    <a href="{{ url('Section') }}" class="waves-effect"><i class="mdi mdi-polaroid"></i><span>Section</span></a>
+                </li>
+                <li>
+                    <a href="{{ url('Period') }}" class="waves-effect"><i class="mdi mdi-polaroid"></i><span>Period</span></a>
+                </li>
 
             </ul>
         </div>

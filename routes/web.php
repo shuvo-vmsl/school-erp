@@ -47,3 +47,11 @@ Route::resource('SchoolManagements', 'SchoolController');
 //for School's class
 Route::get('/Class', 'SchoolClassController@index');
 Route::resource('SchoolClasss', 'SchoolClassController');
+
+//for Section
+Route::get('/Section', 'SectionController@index');
+Route::resource('Sections', 'SectionController');
+
+//for Period
+Route::get('/Period', 'PeriodController@index');
+Route::resource('Periods', 'PeriodController');
