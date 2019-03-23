@@ -57,6 +57,12 @@
                 <li>
                     <a href="{{ url('Period') }}" class="waves-effect"><i class="mdi mdi-polaroid"></i><span>Period</span></a>
                 </li>
+                <li>
+                    <a href="{{ url('Enroll') }}" class="waves-effect"><i class="mdi mdi-polaroid"></i><span>Enroll</span></a>
+                </li>
+                <li>
+                    <a href="{{ url('Attendance') }}" class="waves-effect"><i class="mdi mdi-polaroid"></i><span>Attendance</span></a>
+                </li>
 
             </ul>
         </div>

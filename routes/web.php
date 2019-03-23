@@ -55,3 +55,11 @@ Route::resource('Sections', 'SectionController');
 //for Period
 Route::get('/Period', 'PeriodController@index');
 Route::resource('Periods', 'PeriodController');
+
+//for Enroll
+Route::get('/Enroll', 'EnrollController@index');
+Route::resource('Enrolls', 'EnrollController');
+
+//for Attendance
+Route::get('/Attendance', 'AttendanceController@index');
+Route::resource('Attendances', 'AttendanceController');

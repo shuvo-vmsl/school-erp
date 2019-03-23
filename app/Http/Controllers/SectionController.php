@@ -79,18 +79,18 @@ class SectionController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'section_id'      =>  'required',
-            'section_name' =>  'required',
-            'section_description'      =>  'required',
-            'section_teacher' =>  'required',
-            'section_cr'      =>  'required'
+            'section_id'            =>  'required',
+            'section_name'          =>  'required',
+            'section_description'   =>  'required',
+            'section_teacher'       =>  'required',
+            'section_cr'            =>  'required'
         ]);
         $section = Section::find($id);
-        $section    ->section_id      = $request->get('section_id');
-        $section    ->section_name = $request->get('section_name');
-        $section    ->section_description      = $request->get('section_description');
-        $section    ->section_teacher = $request->get('section_teacher');
-        $section    ->section_cr      = $request->get('section_cr');
+        $section    ->section_id            = $request->get('section_id');
+        $section    ->section_name          = $request->get('section_name');
+        $section    ->section_description   = $request->get('section_description');
+        $section    ->section_teacher       = $request->get('section_teacher');
+        $section    ->section_cr            = $request->get('section_cr');
         $section    ->save();
         return redirect('Section');
     }
