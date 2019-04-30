@@ -4,6 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Attendance;
+use App\Enroll;
+use App\Period;
+use App\Section;
+use App\ClassModel;
+
+use DB;
+use App\Quotation;
 
 class AttendanceController extends Controller
 {
@@ -14,8 +21,8 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        $attendances = Attendance::all();
-        return view('admin.attendance', compact('attendances'));
+        $enrols = Enroll::all();
+        return view('admin.attendance.index', compact('enrols'));
     }
 
     /**
@@ -25,7 +32,8 @@ class AttendanceController extends Controller
      */
     public function create()
     {
-        //
+        $attendances = Attendance::all();
+        return view('admin.attendance.attendance', compact('attendances'));
     }
 
     /**
@@ -34,19 +42,19 @@ class AttendanceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $school_reg_id  =   $request->school_reg_id;
-        $class_id       =   $request->class_id;
-        $section_id     =   $request->section_id;
-        $period_id      =   $request->period_id;
-        $user_id        =   $request->user_id;
-        $comment        =   $request->comment;
-        $status          =   $request->status;
-        Attendance::create($request->all()); 
-        return redirect()->route('Attendances.index')
-            ->with('success','*All* created successfully.');
-    }
+    // public function store(Request $request)
+    // {
+    //     $school_reg_id  =   $request->school_reg_id;
+    //     $class_id       =   $request->class_id;
+    //     $section_id     =   $request->section_id;
+    //     $period_id      =   $request->period_id;
+    //     $user_id        =   $request->user_id;
+    //     $comment        =   $request->comment;
+    //     $status          =   $request->status;
+    //     Attendance::create($request->all()); 
+    //     return redirect()->route('Attendances.index')
+    //         ->with('success','*All* created successfully.');
+    // }
 
     /**
      * Display the specified resource.
@@ -54,10 +62,6 @@ class AttendanceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -78,23 +82,33 @@ class AttendanceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function student_attendance(Request $request)
     {
-        $this->validate($request, [
-            //'school_reg_id' =>  'required',
-            //'class_id'      =>  'required',
-            //'section_id'    =>  'required',
-            //'period_id'     =>  'required',
-            //'user_id'       =>  'required',
-            'comment'       =>  'required',
-            'status'        =>  'required'
-        ]);
-        $attendance = Attendance::find($id);
-        $attendance    ->comment        = $request->get('comment');
-        $attendance    ->status         = $request->get('status');
-        $attendance    ->save();
-        return redirect('Attendance');
-    }
+        $attendance = [];
+		$class_id = $request->class_id;
+		$section_id = $request->section_id;
+		$date = $request->date;		
+		if($class_id == "" || $section_id == "" || $date == ""){
+			return view('backend.attendance.student-attendance',compact('attendance','date','class_id','section_id'));
+		}else{		    
+			$class = ClassModel::find($class_id)->class_name;
+			$section = Section::find($section_id)->section_name;
+
+			$attendance = Student::select('*','student_attendances.id AS attendance_id')
+									->leftJoin('student_attendances',function($join) use ($date) {
+										$join->on('student_attendances.student_id','=','students.id');
+										$join->where('student_attendances.date','=',$date);
+									})
+									->join('student_sessions','student_sessions.student_id','=','students.id')
+									->where('student_sessions.session_id',get_option('academic_year'))
+									->where('student_sessions.class_id',$class_id)
+									->where('student_sessions.section_id',$section_id)
+									->orderBy('student_sessions.roll', 'ASC')
+									->get();														                        
+
+			return view('admin.attendance.attendance',compact('attendance','date','class','section','class_id','section_id'));
+		}
+	}
 
     /**
      * Remove the specified resource from storage.

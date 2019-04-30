@@ -59,7 +59,9 @@ class EnrollController extends Controller
      */
     public function show($id)
     {
-        //
+        $enrolls    =   Enroll::find($id);
+        //$en -> id = $request->get('id');
+        dd($enrolls);
     }
 
     /**
@@ -107,6 +109,12 @@ class EnrollController extends Controller
         $enroll    ->save();
         return redirect('Enroll');
     }
+
+    // public function test(Request $request, $id){
+    //     $enroll = Enroll::find($id);
+    //     $en -> id = $request->get('id');
+    //     dd($en);
+    // }
 
     /**
      * Remove the specified resource from storage.

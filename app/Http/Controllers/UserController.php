@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 // use User;
 use App\User;
 class userController extends Controller
@@ -46,17 +47,31 @@ class userController extends Controller
         //     'user_address'  => 'required'
         // ]);
 
-        $request->request->add(['user_id' =>  "mdc-".rand(100,999)]);
-        $request->request->add(['status_flag' => 2]);
-        // status_flag
-        //$user_id      =   $request->user_id;
-        $user_flag      =   $request->user_flag;
-        $user_name      =   $request->user_name;
-        $user_phone     =   $request->user_phone;
-        $user_address   =   $request->user_address;
+        // $request->request->add(['user_id' =>  "mdc-".rand(100,999)]);
+        // $request->request->add(['status_flag' => 2]);
+        // // status_flag
+        // //$user_id      =   $request->user_id;
+        // $user_flag      =   $request->user_flag;        //determine user category 1-teacher, 2-student, 3-guardians, 4-employee
+        // $user_name      =   $request->user_name;
+        // $password       =   Hash::make($request['password']);
+        // //dd($password);
+        // $user_phone     =   $request->user_phone;
+        // $user_address   =   $request->user_address;
 
-        User::create($request->all()); 
-        return redirect()->route('UserManagements.index')
+        // User::create($request->all()); 
+        // return redirect()->route('UserManagements.index')
+        //      ->with('success','*All* created successfully.');
+
+            return User::create([
+                'user_id' =>  "mdc-".rand(100,999),
+                'status_flag' => 2,
+                'user_flag' => $request['user_flag'],
+                'user_name' => $request['user_name'],
+                'password' => Hash::make($request['password']),
+                'user_phone' => $request['user_phone'],
+                'user_address' => $request['user_address'],
+            ]);
+            return redirect()->route('UserManagements.index')
              ->with('success','*All* created successfully.');
         
     }
@@ -67,7 +82,7 @@ class userController extends Controller
         $status_flag      =   $request->status_flag;
         $user->update(['status_flag' =>request('status_flag')]);
         return redirect()->route('UserManagements.index')
-             ->with('success','Status changed successfully.');
+            ->with('success','Status changed successfully.');
     }
 
     /**
@@ -101,7 +116,14 @@ class userController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'user_flag'      =>  'required'
+        ]);
+        $user = User::find($id);
+        //$status_flag      =   $request->status_flag;
+        $user->user_flag = $request->get('user_flag');
+        $user->save();
+        return redirect('UserManagement');
     }
 
     /**

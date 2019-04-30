@@ -35,6 +35,7 @@ class SectionController extends Controller
      */
     public function store(Request $request)
     {
+        $class_id               =   $request->class_id;
         $section_id             =   $request->section_id;
         $section_name           =   $request->section_name;
         $section_description    =   $request->section_description;
