@@ -63,3 +63,6 @@ Route::resource('Enrolls', 'EnrollController');
 //for Attendance
 Route::get('/Attendance', 'AttendanceController@index');
 Route::resource('Attendances', 'AttendanceController');
+
+//assignment 
+Route::resource('assignments','AssignmentController');
