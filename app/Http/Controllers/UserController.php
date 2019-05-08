@@ -3,11 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-// use User;
+use Illuminate\Validation\Rule;
 use App\User;
-class userController extends Controller
+use Validator;
+use Carbon\Carbon;
+use Hash;
+use Image;
+
+class UserController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -15,10 +29,10 @@ class userController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-  
-        return view('admin.user_management_panel', compact('users'));
-            //->with('i', (request()->input('page', 1) - 1) * 5);
+        $users = User::where('user_type',"!=","Parent")
+		             ->where('user_type',"!=","Student")
+		             ->orderBy('id', 'DESC')->get();
+        return view('backend.users.user-list',compact('users'));
     }
 
     /**
@@ -28,7 +42,7 @@ class userController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.users.user-add');
     }
 
     /**
@@ -39,51 +53,43 @@ class userController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'user_id'       => 'required',
-        //     'user_flag'     => 'required',
-        //     'user_name'     => 'required',
-        //     'user_phone'    => 'required',
-        //     'user_address'  => 'required'
-        // ]);
+        $this->validate($request, [
+            'name' => 'required|string|max:191',
+            'email' => 'required|string|email|max:191|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+            'school_id'=>   'required',
+            'user_type' => 'required',
+            'role_id' => 'required',
+			'phone' => 'required|string|max:20',
+            'image' => 'nullable|image|max:5120',
 
-        // $request->request->add(['user_id' =>  "mdc-".rand(100,999)]);
-        // $request->request->add(['status_flag' => 2]);
-        // // status_flag
-        // //$user_id      =   $request->user_id;
-        // $user_flag      =   $request->user_flag;        //determine user category 1-teacher, 2-student, 3-guardians, 4-employee
-        // $user_name      =   $request->user_name;
-        // $password       =   Hash::make($request['password']);
-        // //dd($password);
-        // $user_phone     =   $request->user_phone;
-        // $user_address   =   $request->user_address;
+        ]);
 
-        // User::create($request->all()); 
-        // return redirect()->route('UserManagements.index')
-        //      ->with('success','*All* created successfully.');
+        $ImageName='profile.png';
 
-            return User::create([
-                'user_id' =>  "mdc-".rand(100,999),
-                'status_flag' => 2,
-                'user_flag' => $request['user_flag'],
-                'user_name' => $request['user_name'],
-                'password' => Hash::make($request['password']),
-                'user_phone' => $request['user_phone'],
-                'user_address' => $request['user_address'],
-            ]);
-            return redirect()->route('UserManagements.index')
-             ->with('success','*All* created successfully.');
-        
-    }
+        if ($request->hasFile('image')){
+           $image = $request->file('image');
+           $ImageName = time().'.'.$image->getClientOriginalExtension();
+           Image::make($image)->resize(400, 400)->save(base_path('public/uploads/images/users/') . $ImageName);
+        }
 
-    public function status(Request $request, $id)
-    {
-        $user = User::find($id);
-        $status_flag      =   $request->status_flag;
-        $user->update(['status_flag' =>request('status_flag')]);
-        return redirect()->route('UserManagements.index')
-            ->with('success','Status changed successfully.');
-    }
+       $user = new User();
+       $user->name = $request->name;
+       $user->school_id = $request->school_id;
+       $user->email = $request->email;
+       $user->password = Hash::make($request->password);
+       $user->user_type = $request->user_type;
+       $user->role_id = $request->role_id;
+       $user->phone = $request->phone;
+       $user->image = 'users/'.$ImageName;
+	   $user->facebook = $request->facebook =="" ? "#" : $request->facebook;
+	   $user->twitter = $request->twitter =="" ? "#" : $request->twitter;
+	   $user->linkedin = $request->linkedin =="" ? "#" : $request->linkedin;
+	   $user->google_plus = $request->google_plus =="" ? "#" : $request->google_plus;
+       $user->save();
+
+       return redirect('users')->with('success', _lang('Information has been added'));
+   }
 
     /**
      * Display the specified resource.
@@ -93,7 +99,8 @@ class userController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = User::findOrFail($id);
+        return view('backend.users.user-view',compact('data'));
     }
 
     /**
@@ -104,7 +111,8 @@ class userController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = User::findOrFail($id);
+        return view('backend.users.user-edit',compact('data'));
     }
 
     /**
@@ -117,14 +125,41 @@ class userController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'user_flag'      =>  'required'
+            'name' => 'required|string|max:191',
+            'password' => 'nullable|min:6|confirmed',
+            'email' => [
+                'required',
+                Rule::unique('users')->ignore($id),
+            ],
+            'user_type' => 'required',
+			'role_id' => 'required',
+			'phone' => 'required|string|max:20',
+            'image' => 'nullable|image|max:5120',
         ]);
+        
         $user = User::find($id);
-        //$status_flag      =   $request->status_flag;
-        $user->user_flag = $request->get('user_flag');
-        $user->save();
-        return redirect('UserManagement');
-    }
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->user_type = $request->user_type;
+		$user->role_id = $request->role_id;
+        $user->phone = $request->phone;
+        if($request->password){
+            $user->password = Hash::make($request->password);
+        }
+        if ($request->hasFile('image')){
+           $image = $request->file('image');
+           $ImageName = time().'.'.$image->getClientOriginalExtension();
+           Image::make($image)->resize(400, 400)->save(base_path('public/uploads/images/users/') . $ImageName);
+           $user->image = 'users/'.$ImageName;
+       }
+	   $user->facebook = $request->facebook =="" ? "#" : $request->facebook;
+	   $user->twitter = $request->twitter =="" ? "#" : $request->twitter;
+	   $user->linkedin = $request->linkedin =="" ? "#" : $request->linkedin;
+	   $user->google_plus = $request->google_plus =="" ? "#" : $request->google_plus;
+       $user->save();
+
+       return redirect('users')->with('success', _lang('Information has been updated'));
+   }
 
     /**
      * Remove the specified resource from storage.
@@ -134,6 +169,18 @@ class userController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+
+        $user->delete();
+
+        return redirect('users')->with('success', _lang('Information has been deleted'));
     }
+	
+	public function get_users( $user_type="" ){
+		if( $user_type != "" ){
+		   $users = User::where("user_type",$user_type)->get();			   
+		   return json_encode($users);
+		}
+	}
+	
 }

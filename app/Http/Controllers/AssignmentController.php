@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Assignment;
+use App\User;
 
 class AssignmentController extends Controller
 {
@@ -19,9 +20,10 @@ class AssignmentController extends Controller
                             ->join('sections','sections.id','=','assignments.class_id')
                             ->join('subjects','subjects.id','=','assignments.class_id')
                             ->where('assignments.session_id', get_option('academic_year'))
-                            ->orderBy('assignments.id', 'DESC')
+                            ->where('assignments.school_id','=','mdc','&','shaheen')
+                            ->orderBy('assignments.id','DESC')
                             ->get();
-        return view('admin.assignments.assignment-list',compact('assignments'));
+        return view('backend.assignments.assignment-list',compact('assignments'));
     }
 
     /**
@@ -31,7 +33,7 @@ class AssignmentController extends Controller
      */
     public function create()
     {
-        return view('admin.assignments.assignment-add');
+        return view('backend.assignments.assignment-add');
     }
 
     /**
@@ -110,7 +112,7 @@ class AssignmentController extends Controller
 							->where('assignments.session_id', get_option('academic_year'))
                             ->first();
 
-        return view('admin.assignments.assignment-show',compact('assignment'));
+        return view('backend.assignments.assignment-show',compact('assignment'));
     }
 
     /**
@@ -124,7 +126,7 @@ class AssignmentController extends Controller
         $assignment = Assignment::where("id",$id)
 		                        ->where('assignments.session_id', get_option('academic_year'))->first();
 
-        return view('admin.assignments.assignment-edit',compact('assignment'));
+        return view('backend.assignments.assignment-edit',compact('assignment'));
     }
 
     /**
