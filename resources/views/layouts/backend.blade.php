@@ -82,7 +82,8 @@
        <script src="{{ asset('public/admin-asset') }}/assets/pages/dashboard.js"></script>
 
        <!-- App js -->
-       <script src="{{ asset('public/admin-asset') }}/assets/js/app.js"></script>
+	   <script src="{{ asset('public/admin-asset') }}/assets/js/app.js"></script>
+	   <script src="{{ asset('public/admin-asset') }}/assets/plugins/dropzone/dist/dropzone.js"></script>
 
 
 

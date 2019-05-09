@@ -1,13 +1,13 @@
 @extends('layouts.backend')
 @section('content')
-<div class="row">
-	<div class="col-md-12">
-		<div class="panel panel-default" data-collapsed="0">
-			<div class="panel-heading">
-				<div class="panel-title" >
+<div class="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card m-b-16">
+					<div class="card-body">
 					{{_lang('Add New Student')}}
-				</div>
-			</div>
+				
 			<div class="panel-body">
 			  <div class="col-md-10">
 				<form action="{{route('students.store')}}" autocomplete="off" class="form-horizontal form-groups-bordered validate" enctype="multipart/form-data" method="post" accept-charset="utf-8">
@@ -16,6 +16,7 @@
 						<label class="col-sm-3 control-label">{{_lang('First Name')}}</label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" name="first_name" value="{{ old('first_name') }}" required>
+							<input type="text" class="form-control" name="school_id" value="{{ Auth::user()->school_id }}" required hidden>
 						</div>
 					</div>
 					
@@ -43,7 +44,7 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">{{_lang('Gender')}}</label>
 						<div class="col-sm-9">
-							<select name="gender" class="form-control niceselect wide" required>
+							<select name="gender" class="form-control" required>
 								<option value="">{{ _lang('Select One') }}</option>
 								<option value="Male">{{ _lang('Male') }}</option>
 								<option value="Female">{{ _lang('Female') }}</option>
@@ -53,7 +54,7 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">{{_lang('Blood Group')}}</label>
 						<div class="col-sm-9">
-							<select name="blood_group" class="form-control select2">
+							<select name="blood_group" class="form-control">
 								<option value="">{{ _lang('Select One') }}</option>
 								<option value="A+">N/A</option>
 								<option value="A+">A+</option>
@@ -70,7 +71,7 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">{{ _lang('Religion') }}</label>
 						<div class="col-sm-9">
-						    <select name="religion" class="form-control niceselect wide" required>
+						    <select name="religion" class="form-control" required>
 								<option value="">{{ _lang('Select One') }}</option>
 								{{ create_option("picklists","value","value",old('religion'),array("type="=>"Religion")) }}	
 							</select>
@@ -97,7 +98,7 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">{{_lang('Country')}}</label>
 						<div class="col-sm-9">
-							<select name="country" class="form-control select2" required>
+							<select name="country" class="form-control" required>
 							 {{ get_country_list(old('country')) }}
 							</select>
 						</div>
@@ -105,7 +106,7 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">{{_lang('Class')}}</label>
 						<div class="col-sm-9">
-							<select name="class" class="form-control select2" id="class" required>
+							<select name="class" class="form-control" id="class" required>
 								<option value="">{{ _lang('Select One') }}</option>
 								{{ create_option('classes','id','class_name',old('class')) }}
 							</select>
@@ -114,7 +115,7 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">{{_lang('Section')}}</label>
 						<div class="col-sm-9">
-							<select name="section" class="form-control niceselect wide" id="section" required>
+							<select name="section" class="form-control" id="section" required>
 								<option value="">{{ _lang('Select One') }}</option>
 								@foreach($sections AS $data)
 								<option data-class="{{$data->class_id}}" value="{{$data->id}}">{{$data->section_name}}</option>
@@ -125,7 +126,7 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">{{_lang('Group')}}</label>
 						<div class="col-sm-9">
-							<select name="group" class="form-control select2">
+							<select name="group" class="form-control">
 								<option value="">{{ _lang('Select One') }}</option>
 								{{ create_option('student_groups','id','group_name',old('group')) }}
 							</select>
@@ -134,7 +135,7 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">{{_lang('Optional Subject')}}</label>
 						<div class="col-sm-9">
-							<select name="optional_subject" id="optional_subject" class="form-control select2">
+							<select name="optional_subject" id="optional_subject" class="form-control">
 								<option value="">{{ _lang('Select One') }}</option>
 								
 							</select>
@@ -207,6 +208,9 @@
 			</div>
 		</div>
 	</div>
+</div>
+	</div>
+</div>
 </div>
 @endsection
 

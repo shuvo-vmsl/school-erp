@@ -8,7 +8,7 @@
 	    <input type="hidden" name="a_id[]" value="{{ $data->a_id }}">
 	    <input type="hidden" name="subject_id[]" value="{{ $data->s_id }}">
 	    <input type="hidden" name="section_id[]" value="{{ $section }}">
-		<select name="teacher_id[]" class="form-control select2" required>
+		<select name="teacher_id[]" class="form-control " required>
 			<option value="">Select One</option>
 			{{ create_option('teachers','id','name',$data->teacher_id) }}
 		</select>

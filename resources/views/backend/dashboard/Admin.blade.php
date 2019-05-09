@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('contents')
+@section('content')
 
 <div class="page-content-wrapper">
 
