@@ -1,12 +1,12 @@
 <ul class="nav metismenu" id="menu">
-	<li @if(Request::is('dashboard')) class="active" @endif>
+	<li @if(Request::is('dashboard')) class="has_sub active" @endif>
 		<a href="{{ route('dashboard') }}">
 			<i class="fa fa-desktop"></i>
 			{{ _lang('Dashboard') }}
 		</a>
 	</li>
 	
-	<li @if(Request::is('parent/my_profile')) class="active" @endif>
+	<li @if(Request::is('parent/my_profile')) class="has_sub active" @endif>
 		<a href="{{ url('parent/my_profile') }}">
 			<i class="fa fa-user-circle-o"></i>
 			{{ _lang('My Profile') }}

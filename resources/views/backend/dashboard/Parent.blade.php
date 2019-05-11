@@ -1,42 +1,45 @@
 @extends('layouts.backend')
 @section('content')
-
-<div class="row">
-	<div class="col-md-12">
-		<div class="card">
-			<div class="header">
-				<h4 class="title text-center">{{ _lang('Notice') }}</h4>
-			</div>
-			<div class="content no-export">
-				<table class="table table-bordered data-table">
-				   <thead>
-				     <th>{{ _lang('Notice') }}</th>
-				     <th>{{ _lang('Created') }}</th>
-				     <th class="text-center">{{ _lang('View') }}</th>
-				   </thead>
-				   <tbody>
-						@foreach(get_notices("Parent",100) as $notice)
-						  <tr>
-							<td>{{ $notice->heading }}</td>
-							<td>{{ date("d M, Y - H:i", strtotime($notice->created_at)) }}</td>
-						    <td class="text-center"><a href="{{ action('NoticeController@show', $notice->id) }}" data-title="{{ _lang('View Notice') }}" class="btn btn-primary btn-sm ajax-modal">{{ _lang('View Notice') }}</a></td>
-						  </tr>
-						@endforeach
-				   </tbody>
-				</table>
+<div class="page-content-wrapper">
+    <div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="header">
+						<h4 class="title text-center">{{ _lang('Notice') }}</h4>
+					</div>
+					<div class="content no-export">
+						<table class="table table-bordered data-table">
+						<thead>
+							<th>{{ _lang('Notice') }}</th>
+							<th>{{ _lang('Created') }}</th>
+							<th class="text-center">{{ _lang('View') }}</th>
+						</thead>
+						<tbody>
+								@foreach(get_notices("Parent",100) as $notice)
+								<tr>
+									<td>{{ $notice->heading }}</td>
+									<td>{{ date("d M, Y - H:i", strtotime($notice->created_at)) }}</td>
+									<td class="text-center"><a href="{{ action('NoticeController@show', $notice->id) }}" data-title="{{ _lang('View Notice') }}" class="btn btn-primary btn-sm ajax-modal">{{ _lang('View Notice') }}</a></td>
+								</tr>
+								@endforeach
+						</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-</div>
-
-<div class="row">
-	<div class="col-md-12">
-		<div class="card">
-			<div class="header">
-				<h4 class="title text-center">{{ _lang('Event Calendar') }}</h4>
-			</div>
-			<div class="content">
-				<div id='event_calendar'></div>
+		<br>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="header">
+						<h4 class="title text-center">{{ _lang('Event Calendar') }}</h4>
+					</div>
+					<div class="content">
+						<div id='event_calendar'></div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

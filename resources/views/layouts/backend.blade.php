@@ -17,7 +17,9 @@
     <!-- Animation library for notifications   -->
     <link href="{{ asset('public/admin-asset') }}/assets/css/icons.css" rel="stylesheet"/>
 	<!-- bootstrap-datepicker library -->
-    <link href="{{ asset('public/admin-asset') }}/assets/css/style.css" rel="stylesheet"/>
+	<link href="{{ asset('public/admin-asset') }}/assets/css/style.css" rel="stylesheet"/>
+	<!--calendar css-->
+	<link href="{{ asset('public/admin-asset') }}/assets/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet" />
 	<script type="text/javascript">
 	   var direction = "{{ get_option('backend_direction') }}";
 	</script>
@@ -84,7 +86,11 @@
        <!-- App js -->
 	   <script src="{{ asset('public/admin-asset') }}/assets/js/app.js"></script>
 	   <script src="{{ asset('public/admin-asset') }}/assets/plugins/dropzone/dist/dropzone.js"></script>
-
+		<!-- Jquery-Ui -->
+		<script src="{{ asset('public/admin-asset') }}/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+		<script src="{{ asset('public/admin-asset') }}/assets/plugins/moment/moment.js"></script>
+		<script src="{{ asset('public/admin-asset') }}/assets/plugins/fullcalendar/js/fullcalendar.min.js"></script>
+		<script src="{{ asset('public/admin-asset') }}/assets/pages/calendar-init.js"></script>
 
 
 
