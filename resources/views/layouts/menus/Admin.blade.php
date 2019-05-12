@@ -81,6 +81,35 @@
 	</li>
 
 	<li class="has_sub">
+		<a href="#"><i class="fa fa-newspaper-o"></i>{{ _lang('Examinations') }}</a>
+		<ul>
+			<li @if(Request::is('exams')) class="active" @endif>
+				<a href="{{url('exams')}}">
+					{{ _lang('Exam List') }}
+				</a>
+			</li>
+
+			<li @if(Request::is('exams/schedule/create')) class="active" @endif>
+				<a href="{{url('exams/schedule/create')}}">
+					{{ _lang('Exam Schedule') }}
+				</a>
+			</li>
+
+			<!-- <li @if(Request::is('exams/schedule')) class="active" @endif>
+				<a href="{{url('exams/schedule')}}">
+					{{ _lang('Exam Routine') }}
+				</a>
+			</li> -->
+
+			<!-- <li @if(Request::is('exams/attendance')) class="active" @endif>
+				<a href="{{url('exams/attendance')}}">
+					{{ _lang('Exam Attendance') }}
+				</a>
+			</li> -->
+
+		</ul>
+	</li>
+	<li class="has_sub">
 		<a class="waves-effect" href="#"><i class="fa fa-bar-chart"></i>{{ _lang('Reports') }}</a>
 		<ul>
 		   <li @if(Request::is('reports/student_attendance_report') || Request::is('reports/student_attendance_report/view')) class="active" @endif>
@@ -88,6 +117,18 @@
 					{{ _lang('Student Attendance') }}
 				</a>
 		   </li>
+		
+			<li @if(Request::is('reports/exam_routine') || Request::is('reports/exam_routine/view')) class="active" @endif>
+				<a href="{{ url('reports/exam_routine') }}">
+					{{ _lang('Exam Routine') }}
+				</a>
+			</li>
+			
+			<!-- <li @if(Request::is('reports/exam_report') || Request::is('reports/exam_report/view')) class="active" @endif>
+				<a href="{{ url('reports/exam_report') }}">
+					{{ _lang('Exam Report') }}
+				</a>
+			</li> -->
 		</ul>
 	</li>
 
