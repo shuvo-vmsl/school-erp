@@ -23,7 +23,6 @@
 								<div class="form-group">
 									<label class="col-sm-3 control-label">{{_lang('Description')}}</label>
 									<div class="col-sm-9">
-									<textarea id="elm1" name="area"></textarea>
 										<textarea class="form-control" id="summernote" name="description">{{ old('description') }}</textarea>
 									</div>
 								</div>

@@ -30,7 +30,7 @@
 							<div class="form-group">
 							<div class="col-sm-12">
 									<label class="control-label">Class</label>
-									<select name="class_id" class="form-control select2" required>
+									<select name="class_id" class="form-control" required>
 										<option value="">Select One</option>
 										{{ create_option('classes','id','class_name',old('class_id')) }}
 									</select>
@@ -39,7 +39,7 @@
 							<div class="form-group">
 								<div class="col-sm-12">
 									<label class="control-label">Teacher</label>
-									<select name="class_teacher_id" class="form-control select2" required>
+									<select name="class_teacher_id" class="form-control" required>
 										<option value="">Select One</option>
 										{{ create_option('teachers','id','name',old('class_teacher_id')) }}
 									</select>

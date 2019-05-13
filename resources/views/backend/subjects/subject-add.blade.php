@@ -28,7 +28,7 @@
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="control-label">{{_lang('Subject Type')}}</label>
-									<select name="subject_type" class="form-control select2" required>
+									<select name="subject_type" class="form-control" required>
 										<option value="">Select One</option>
 										<option value="Theory">Theory</option>
 										<option value="Practical">Practical</option>
@@ -38,7 +38,7 @@
 							<div class="col-sm-6">
 							<div class="form-group">
 									<label class="control-label">Class</label>
-									<select name="class_id" class="form-control select2" required>
+									<select name="class_id" class="form-control" required>
 										<option value="">Select One</option>
 										{{ create_option('classes','id','class_name',old('class_id')) }}
 									</select>

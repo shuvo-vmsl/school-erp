@@ -15,30 +15,31 @@
 						<form method="post" class="params-panel validate" autocomplete="off" action="{{url('exams/schedule')}}">  
 					@endif
 							{{ csrf_field() }}
-							
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label">{{ _lang('Select Exam') }}</label>						
-									<select class="form-control" name="exam" required>
-									<option value="">{{ _lang('Select One') }}</option>
-									{{ create_option("exams","id","name",isset($exam) ? $exam :old('exam'),array("session_id="=>get_option('academic_year'))) }}
-									</select> 
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="control-label">{{ _lang('Select Exam') }}</label>						
+										<select class="form-control" name="exam" required>
+										<option value="">{{ _lang('Select One') }}</option>
+										{{ create_option("exams","id","name",isset($exam) ? $exam :old('exam'),array("session_id="=>get_option('academic_year'))) }}
+										</select> 
+									</div>
 								</div>
-							</div>
-							
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label">{{ _lang('Select Class') }}</label>						
-									<select class="form-control" name="class" required>
-									<option value="">{{ _lang('Select One') }}</option>
-									{{ create_option("classes","id","class_name",isset($class) ? $class :old('class')) }}
-									</select>
+								
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="control-label">{{ _lang('Select Class') }}</label>						
+										<select class="form-control" name="class" required>
+										<option value="">{{ _lang('Select One') }}</option>
+										{{ create_option("classes","id","class_name",isset($class) ? $class :old('class')) }}
+										</select>
+									</div>
 								</div>
-							</div>
-									
-							<div class="col-md-4">
-								<div class="form-group">
-									<button type="submit" style="margin-top:24px;" class="btn btn-primary btn-block rect-btn">{{ _lang('Search') }}</button>
+										
+								<div class="col-md-4">
+									<div class="form-group">
+										<button type="submit" style="margin-top:24px;" class="btn btn-primary btn-block rect-btn">{{ _lang('Search') }}</button>
+									</div>
 								</div>
 							</div>
 						</form>

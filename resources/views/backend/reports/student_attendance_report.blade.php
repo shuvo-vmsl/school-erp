@@ -13,39 +13,41 @@
                     <div class="card-body">
                         <form id="search_form" class="params-panel validate" action="{{ url('reports/student_attendance_report/view') }}" method="post" autocomplete="off" accept-charset="utf-8">
                             @csrf
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label class="control-label">{{ _lang('Class') }}</label>
-                                    <select name="class_id" class="form-control" onChange="getData(this.value);" required>
-                                        <option value="">{{ _lang('Select One') }}</option>
-                                        {{ create_option('classes','id','class_name',$class_id) }}
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label class="control-label">{{ _lang('Section') }}</label>
-                                    <select name="section_id" class="form-control" required>
-                                        <option value="">{{ _lang('Select One') }}</option>
-                                        {{ create_option('sections','id','section_name',$section_id,array("class_id="=>$class_id)) }}
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label class="control-label">{{ _lang('Month') }}</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                        <input type="text" class="form-control monthpicker" name="month" value="{{ $month }}" readOnly="true" required>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="control-label">{{ _lang('Class') }}</label>
+                                        <select name="class_id" class="form-control" onChange="getData(this.value);" required>
+                                            <option value="">{{ _lang('Select One') }}</option>
+                                            {{ create_option('classes','id','class_name',$class_id) }}
+                                        </select>
                                     </div>
                                 </div>
-                            </div>
-                            
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="control-label">{{ _lang('Section') }}</label>
+                                        <select name="section_id" class="form-control" required>
+                                            <option value="">{{ _lang('Select One') }}</option>
+                                            {{ create_option('sections','id','section_name',$section_id,array("class_id="=>$class_id)) }}
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="control-label">{{ _lang('Month') }}</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <input type="text" class="form-control monthpicker" name="month" value="{{ $month }}" readOnly="true" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                
 
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <button type="submit" style="margin-top:24px;" class="btn btn-primary btn-block rect-btn">{{_lang('View Report')}}</button>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <button type="submit" style="margin-top:24px;" class="btn btn-primary btn-block rect-btn">{{_lang('View Report')}}</button>
+                                    </div>
                                 </div>
                             </div>
                         </form>

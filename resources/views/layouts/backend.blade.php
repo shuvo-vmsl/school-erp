@@ -20,6 +20,10 @@
 	<link href="{{ asset('public/admin-asset') }}/assets/css/style.css" rel="stylesheet"/>
 	<!--calendar css-->
 	<link href="{{ asset('public/admin-asset') }}/assets/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet" />
+	<!-- Datatable core CSS     -->
+	<link href="{{ asset('public/backend') }}/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+	<!--  Quill editor    -->
+	<link href="{{ asset('public/backend') }}/css/summernote.css" rel="stylesheet"/>
 	<script type="text/javascript">
 	   var direction = "{{ get_option('backend_direction') }}";
 	</script>
