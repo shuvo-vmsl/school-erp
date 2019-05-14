@@ -81,6 +81,7 @@ class StudentController extends Controller
     public function store(Request $request)
     {
     	$this->validate($request, [
+			'school_id'	=> 'required',
     		'first_name' => 'required|string|max:191',
     		'last_name' => 'required|string|max:191',
     		'guardian' => 'required',
@@ -111,7 +112,8 @@ class StudentController extends Controller
     	}
 
 		//Create User
-    	$user = new User();
+		$user = new User();
+		$user->school_id = $request->school_id;
     	$user->name = $request->first_name." ".$request->last_name;
     	$user->email = $request->email;
     	$user->password = Hash::make($request->password);
@@ -121,7 +123,8 @@ class StudentController extends Controller
     	$user->save();
 
 		//Create Student Information
-    	$student = new Student();
+		$student = new Student();
+		$student->school_id = $request->school_id;
     	$student->user_id = $user->id;
     	$student->parent_id = $request->guardian;
     	$student->first_name = $request->first_name;
@@ -142,7 +145,8 @@ class StudentController extends Controller
 
 		//Create Student Session Information
     	$studentSession = new StudentSession();
-    	$studentSession->session_id = get_option('academic_year');
+		$studentSession->session_id = get_option('academic_year');
+		$studentSession->school_id = $request->school_id;
     	$studentSession->student_id = $student->id;
     	$studentSession->class_id = $request->class;
     	$studentSession->section_id = $request->section;

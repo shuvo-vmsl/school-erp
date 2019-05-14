@@ -18,6 +18,7 @@
 									<label class="col-sm-3 control-label">{{_lang('Title')}}</label>
 									<div class="col-sm-9">
 										<input type="text" class="form-control" name="title" value="{{ old('title') }}" required>
+										<input type="text" class="form-control" name="school_id" value="{{ Auth::user()->school_id }}" required hidden>
 									</div>
 								</div>
 								<div class="form-group">

@@ -47,6 +47,7 @@ class AssignmentController extends Controller
         $this->validate($request, [
             'title' => 'required|string|max:191',
             'description' => 'nullable|string',
+            'school_id'   => 'required',
             'deadline' => 'required|date',
             'class_id' => 'required',
             'section_id' => 'required',
@@ -59,6 +60,7 @@ class AssignmentController extends Controller
 
         $assignment = new Assignment();
         $assignment->session_id = get_option("academic_year");
+        $assignment->school_id = $request->school_id;
         $assignment->title = $request->title;
         $assignment->description = $request->description;
         $assignment->deadline = $request->deadline;

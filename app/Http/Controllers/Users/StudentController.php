@@ -255,7 +255,8 @@ class StudentController extends Controller
                             ->join('subjects','subjects.id','=','assignments.class_id')
 							->where('assignments.class_id',$student->class_id)
 							->where('assignments.section_id',$student->section_id)
-                            ->where('assignments.session_id', get_option('academic_year'))
+							->where('assignments.session_id', get_option('academic_year'))
+							->where('assignments.school_id','=','mdc')
 							->orderBy('assignments.id', 'DESC')
                             ->get();
         return view('backend.private.student.assignments.assignment-list',compact('assignments'));
