@@ -4,9 +4,9 @@
     <!-- LOGO -->
     <div class="topbar-left">
         <div class="">
-            <!-- <a href="/admin" class="logo text-center">{{ get_option('school_name')}}</a> -->
+            <!-- <a href="/admin" class="logo text-center">{{ get_option('school_id')}}</a> -->
             <a href="/admin" class="logo text-center">{{ Auth::user()->school_id }}</a>
-            <!--<a href="index.html" class="logo"><img src="assets/images/logo-sm.png" height="36" alt="logo"></a>-->
+            <!-- <a href="index.html" class="logo"><img src="assets/images/logo-sm.png" height="36" alt="logo"></a> -->
         </div>
     </div>
 
