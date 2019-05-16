@@ -7,8 +7,12 @@
 				<div class="card m-b-20">
 					<div class="card-header">
 						<div class="col-md-6">
-							<h4 class="title">{{_lang('Assignments List')}}</h4>
+							<h4 class="title">{{_lang('Assignments List')}}value="{{ Auth::user()->school_id }}"</h4>
 						</div>
+						<select id="class" class="select_class pull-right" onchange="showClass(this);">
+							<option value="">Select Class</option>
+								{{ create_option('classes','id','class_name',$class) }}
+						</select>
 						<div class="col-md-6 pull-right" style="text-align: right;">
 							<a href="{{route('assignments.create')}}" class="btn btn-info btn-sm">{{_lang('Add New Assignment')}}</a>
 						</div>
@@ -73,3 +77,13 @@
 </div>
 @endsection
 
+@section('js-script')
+<script>
+function showClass(elem){
+	if($(elem).val() == ""){
+		return;
+	}
+	window.location = "<?php echo url('assignments/class') ?>/"+$(elem).val();
+}
+</script>
+@stop
