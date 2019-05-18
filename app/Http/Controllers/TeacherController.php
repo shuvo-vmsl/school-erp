@@ -11,6 +11,7 @@ use App\Picklist;
 use Validator;
 use Hash;
 use Image;
+use Auth;
 
 
 class TeacherController extends Controller
@@ -23,8 +24,10 @@ class TeacherController extends Controller
      */
     public function index()
     {
+        $school_id = Auth::user()->school_id;
         $teachers = Teacher::select('*','teachers.id AS id')
         ->join('users','users.id','=','teachers.user_id')
+        ->where('users.school_id','=',$school_id)
         ->orderBy('teachers.id', 'DESC')->get();
         return view('backend.teachers.teacher-list',compact('teachers'));
     }
@@ -62,6 +65,7 @@ class TeacherController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'school_id'   => 'required',
             'name' => 'required|string|max:191',
             'designation' => 'required|string|max:191',
             'birthday' => 'required',
@@ -83,6 +87,7 @@ class TeacherController extends Controller
         }
 
         $user = new User();
+        $user->school_id = $request->school_id;
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
@@ -93,6 +98,7 @@ class TeacherController extends Controller
 
         $teacher = new Teacher();
         $teacher->user_id = $user->id;
+        $teacher->school_id = $request->school_id;
         $teacher->name = $request->name;
         $teacher->designation = $request->designation;
         $teacher->birthday = $request->birthday;

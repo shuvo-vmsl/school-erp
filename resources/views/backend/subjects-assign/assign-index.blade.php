@@ -18,7 +18,7 @@
 									<label class="control-label">{{_lang('Class')}}</label>
 									<select name="class_id" class="form-control" onChange="getData(this.value);" required>
 										<option value="">{{_lang('Select One') }}</option>
-										{{ create_option('classes','id','class_name',old('class_id')) }}
+										{{ create_option('classes','id','class_name',old('class_id')),'school_id' }}
 									</select>
 								</div>
 							</div>

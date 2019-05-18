@@ -17,6 +17,7 @@
 								<div class="form-group">
 									<label class="control-label">{{_lang('Subject Name')}}</label>
 									<input type="text" class="form-control" name="subject_name" value="{{ old('subject_name') }}" placeholder="Subject Name" required>
+									<input type="text" class="form-control" name="school_id" value="{{ Auth::user()->school_id }}" required hidden>
 								</div>
 							</div>
 							<div class="col-md-6">

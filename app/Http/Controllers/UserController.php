@@ -9,6 +9,7 @@ use Validator;
 use Carbon\Carbon;
 use Hash;
 use Image;
+use Auth;
 
 class UserController extends Controller
 {
@@ -29,8 +30,10 @@ class UserController extends Controller
      */
     public function index()
     {
+        $school_id = Auth::user()->school_id;
         $users = User::where('user_type',"!=","Parent")
-		             ->where('user_type',"!=","Student")
+                     ->where('user_type',"!=","Student")
+                     ->where('school_id', '=',$school_id)
 		             ->orderBy('id', 'DESC')->get();
         return view('backend.users.user-list',compact('users'));
     }

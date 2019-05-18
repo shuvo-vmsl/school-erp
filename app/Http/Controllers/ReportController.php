@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Auth;
 
 class ReportController extends Controller
 {
     
     public function student_attendance_report(Request $request, $view="")
     {
+		$school_id = Auth::user()->school_id;
 		$class_id =0;
 		$section_id ="";
 		$month = "";
@@ -26,13 +28,15 @@ class ReportController extends Controller
 			$query = DB::table('student_attendances')
 					->whereMonth('date', $month[0])
 					->whereYear('date', $month[1])
+					->where('school_id','=',$school_id)
 					->orderBy('date', 'asc')
 					->get();
 						
 	        $query2 = DB::table("students")
 						->join("student_sessions","students.id","=","student_sessions.student_id")
 			            ->where("student_sessions.class_id",$class_id)
-			            ->where("student_sessions.section_id",$section_id)
+						->where("student_sessions.section_id",$section_id)
+						->where('student_sessions.school_id','=',$school_id)
 						->orderBy('students.id', 'asc')
 						->get();
 						
@@ -259,7 +263,8 @@ class ReportController extends Controller
 	public function exam_routine(Request $request, $view=""){
 		$class_id = 0;
 		$exam_id = "";
-		
+		$school_id = Auth::user()->school_id;
+
 		if($view == ""){
 			return view('backend.reports.exam_routine',compact('class_id','exam_id'));
         }else{
@@ -273,6 +278,7 @@ class ReportController extends Controller
 									$join->where('exam_schedules.exam_id',$exam);
 								})
 								->where('subjects.class_id',$request->class_id)
+								->where('subjects.school_id','=',$school_id)
 								->get();
 		    
 			return view('backend.reports.exam_routine',$data);

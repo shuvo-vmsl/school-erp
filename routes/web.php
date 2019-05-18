@@ -93,6 +93,7 @@ Route::group(['middleware' => ['install']], function () {
 			
 			Route::resource('syllabus','SyllabusController');
 			Route::resource('assignments','AssignmentController');
+			Route::get('assignments/class/{class_id?}', 'AssignmentController@class');
 			Route::resource('academic_years','AcademicYearController');	
 			Route::resource('student_groups','StudentGroupController');
 			

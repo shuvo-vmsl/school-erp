@@ -248,15 +248,17 @@ class StudentController extends Controller
 
 	public function my_assignment()
 	{
+		$school_id = Auth::user()->school_id;
 		$student = \App\StudentSession::where("student_id",get_student_id())
-								  ->where("session_id",get_option('academic_year'))
-								  ->first();
+							->where("session_id",get_option('academic_year'))
+							->where('student_sessions.school_id','=',$school_id)
+							->first();
         $assignments = \App\Assignment::select('*','assignments.id AS id')
                             ->join('subjects','subjects.id','=','assignments.class_id')
 							->where('assignments.class_id',$student->class_id)
 							->where('assignments.section_id',$student->section_id)
 							->where('assignments.session_id', get_option('academic_year'))
-							->where('assignments.school_id','=','mdc')
+							->where('assignments.school_id','=',$school_id)
 							->orderBy('assignments.id', 'DESC')
                             ->get();
         return view('backend.private.student.assignments.assignment-list',compact('assignments'));

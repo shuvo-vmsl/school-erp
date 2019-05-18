@@ -37,7 +37,12 @@
 			</li>
 		</ul>
 	 </li>
-
+	 <li @if((Request::is('teachers'))OR(Request::is('teachers/*'))) class="active" @endif>
+		<a href="{{route('teachers.index')}}">
+			<i class="fa fa-address-book"></i>
+			{{ _lang('Teachers') }}
+		</a>
+	</li>
 	<li class="has_sub">
 		<a class="waves-effect" href="#"><i class="fa fa-building-o"></i>{{ _lang('Academic') }}</a>
 		<ul>

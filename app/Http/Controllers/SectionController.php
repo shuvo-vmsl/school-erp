@@ -7,6 +7,7 @@ use Illuminate\Validation\Rule;
 use App\Section;
 use App\ClassModel;
 use App\User;
+use Auth;
 
 class SectionController extends Controller
 {
@@ -17,12 +18,17 @@ class SectionController extends Controller
      */
     public function index($class = "")
     {
-		$sections = array();
+        $sections = array();
+        $school_id = Auth::user()->school_id;
+        // dd($school_id);
 		if($class != ""){
+            // $school_id = Auth::user()->school_id;
+            // dd($school_id);
 			$sections = Section::select('*','sections.id AS id','teachers.name as teacher_name')
 									->join('teachers','teachers.id','=','sections.class_teacher_id')
-									->join('classes','classes.id','=','sections.class_id')
-									->where('sections.class_id', $class)
+                                    ->join('classes','classes.id','=','sections.class_id')
+                                    ->where('classes.school_id','=',$school_id)
+                                    ->where('sections.class_id', $class)
 									->orderBy('sections.rank', 'ASC')
 									->get();
 		}						
@@ -40,6 +46,7 @@ class SectionController extends Controller
     {
         $this->validate($request, [
             'section_name' => 'required|string|max:191',
+            'school_id'   => 'required',
             'class_id' => 'required',
             'class_teacher_id' => 'required|unique:sections',
             'room_no' => 'required|max:100',
@@ -52,6 +59,7 @@ class SectionController extends Controller
         ]);
 
         $section = new Section();
+        $section->school_id = $request->school_id;
         $section->section_name = $request->section_name;
         $section->class_id = $request->class_id;
         $section->class_teacher_id = $request->class_teacher_id;
@@ -69,7 +77,10 @@ class SectionController extends Controller
      */
     public function get_section(Request $request)
     {
-        $results = Section::where('class_id',$request->class_id)->get();
+        $school_id = Auth::user()->school_id;
+        $results = Section::where('class_id',$request->class_id)
+            ->where('school_id','=',$school_id)
+            ->get();
         $sections = '';
         $sections .= '<option value="">'._lang('Select One').'</option>';
         foreach($results as $data){

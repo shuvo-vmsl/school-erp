@@ -17,6 +17,7 @@
 								<div class="col-md-12">
 									<label class="control-label">{{_lang('Name')}}</label>
 									<input type="text" class="form-control" name="class_name" value="{{ old('class_name') }}" placeholder="Class Name" required>
+									<input type="text" class="form-control" name="school_id" value="{{ Auth::user()->school_id }}" required hidden>
 								</div>
 							</div>
 							<div class="form-group">

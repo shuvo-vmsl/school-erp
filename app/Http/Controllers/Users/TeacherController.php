@@ -125,7 +125,8 @@ class TeacherController extends Controller
 		}
    }
    
-   public function assignments(){
+    public function assignments(){
+        $school_id = Auth::user()->school_id;
 		$assignments = \App\Assignment::select('*','assignments.id AS id')
                             ->join('classes','classes.id','=','assignments.class_id')
                             ->join('sections','sections.id','=','assignments.class_id')
@@ -133,6 +134,7 @@ class TeacherController extends Controller
 							->join('assign_subjects','subjects.id','=','assign_subjects.subject_id')
                             ->where('assign_subjects.teacher_id', get_teacher_id())
                             ->where('assignments.session_id', get_option('academic_year'))
+                            ->where('assignments.school_id','=',$school_id)
                             ->orderBy('assignments.id', 'DESC')
 							->groupBy('assignments.id')
                             ->get();
@@ -147,6 +149,7 @@ class TeacherController extends Controller
    public function store_assignment(Request $request)
     {
         $this->validate($request, [
+            'school_id'   => 'required',
             'title' => 'required|string|max:191',
             'description' => 'nullable|string',
             'deadline' => 'required|date',
@@ -161,6 +164,7 @@ class TeacherController extends Controller
 
         $assignment = new \App\Assignment();
         $assignment->session_id = get_option("academic_year");
+        $assignment->school_id = $request->school_id;
         $assignment->title = $request->title;
         $assignment->description = $request->description;
         $assignment->deadline = $request->deadline;

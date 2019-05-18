@@ -7,6 +7,7 @@ use App\Section;
 use App\Subject;
 use App\AssignSubject;
 use Carbon\Carbon;
+use Auth;
 
 class AssignSubjectController extends Controller
 {
@@ -28,8 +29,9 @@ class AssignSubjectController extends Controller
      */
     public function search(Request $request)
     {
+		$school_id = Auth::user()->school_id;
 		$section = sql_escape($request->section_id);
-		$subjects = AssignSubject::getSubject($request->class_id,$section);	
+		$subjects = AssignSubject::getSubject($request->class_id,$section,$school_id);	
 		return view('backend.subjects-assign.assign-list',compact('subjects','section'));
     }
     /**

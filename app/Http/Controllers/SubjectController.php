@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Subject;
+use Auth;
 
 class SubjectController extends Controller
 {
@@ -14,9 +15,11 @@ class SubjectController extends Controller
      */
     public function index( $class='' )
     {
+        $school_id = Auth::user()->school_id;
         $subjects = Subject::select('*','subjects.id AS id')
                         ->join('classes','classes.id','=','subjects.class_id')
                         ->where('subjects.class_id', $class)
+                        ->where('classes.school_id','=',$school_id)
 						->orderBy('subjects.id', 'DESC')
                         ->get();
         return view('backend.subjects.subject-list',compact('subjects','class'));
@@ -42,6 +45,7 @@ class SubjectController extends Controller
     {
         $this->validate($request, [
             'subject_name' => 'required|string|max:191',
+            'school_id'   => 'required',
             'subject_code' => 'required|string|max:191',
             'subject_type' => 'required',
             'class_id' => 'required',
@@ -50,6 +54,7 @@ class SubjectController extends Controller
         ]);
 
         $subject = New Subject();
+        $subject->school_id = $request->school_id;
         $subject->subject_name = $request->subject_name;
         $subject->subject_code = $request->subject_code;
         $subject->subject_type = $request->subject_type;

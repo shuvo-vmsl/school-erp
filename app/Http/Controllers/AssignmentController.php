@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Assignment;
 use App\User;
+use App\ClassModel;
+use Auth;
 
 class AssignmentController extends Controller
 {
@@ -15,17 +17,30 @@ class AssignmentController extends Controller
      */
     public function index()
     {
+        // $school_id = session('school_id');
+       
+        $class = "";
+        $assignments = array();
+
+        return view('backend.assignments.assignment-list',compact('assignments','class'));
+    }
+
+    public function class($class=''){
+        $class = $class;
+        // $school_id = 'mdc';
+        $school_id = Auth::user()->school_id;
         $assignments = Assignment::select('*','assignments.id AS id')
                             ->join('classes','classes.id','=','assignments.class_id')
                             ->join('sections','sections.id','=','assignments.class_id')
                             ->join('subjects','subjects.id','=','assignments.class_id')
                             ->where('assignments.session_id', get_option('academic_year'))
-                            ->where('assignments.school_id','=','mdc','&','shaheen')
+                            ->where('assignments.school_id','=',$school_id)
+                            ->where('assignments.class_id','=',$class)
                             ->orderBy('assignments.id','DESC')
                             ->get();
-        return view('backend.assignments.assignment-list',compact('assignments'));
-    }
+        return view('backend.assignments.assignment-list',compact('assignments','class'));
 
+    }
     /**
      * Show the form for creating a new resource.
      *

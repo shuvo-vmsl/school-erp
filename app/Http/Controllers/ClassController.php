@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ClassModel;
+use Auth;
 
 class ClassController extends Controller
 {
@@ -14,7 +15,11 @@ class ClassController extends Controller
      */
     public function index()
     {
-        $classes = ClassModel::orderBy('id', 'DESC')->get();
+        $school_id = Auth::user()->school_id;
+        // dd($school_id);
+        $classes = ClassModel::orderBy('id', 'DESC')
+        ->where('school_id','=',$school_id)
+        ->get();
         return view('backend.classes.class-add',compact('classes'));
     }
 
@@ -29,11 +34,13 @@ class ClassController extends Controller
     {
         $this->validate($request, [
             'class_name' => 'required|string|max:191',
+            'school_id'   => 'required',
         ]);
 
         $class = new ClassModel();
 
         $class->class_name = $request->class_name;
+        $class->school_id = $request->school_id;
 
         $class->save();
 

@@ -11,6 +11,7 @@ use App\ExamAttendance;
 use Validator;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
+use Auth;
 
 class ExamController extends Controller
 {
@@ -32,9 +33,11 @@ class ExamController extends Controller
      */
     public function index()
     {
-        $exams = Exam::where("session_id",get_option("academic_year"))
-		->orderBy('id', 'desc')
-		->get();
+		$school_id = Auth::user()->school_id;
+		$exams = Exam::where("session_id",get_option("academic_year"))
+			->where('school_id', '=', $school_id)
+			->orderBy('id', 'desc')
+			->get();
         return view('backend.exam.exam.list',compact('exams'));
     }
 	
@@ -43,6 +46,7 @@ class ExamController extends Controller
 		$exam = $request->input('exam');
 		$class = $request->input('class');
 		$type = $type;
+		$school_id = Auth::user()->school_id;
 		
 		if($exam !="" && $class !=""){
 			$subjects = Subject::select('*','exam_schedules.id as schedules_id','subjects.id as subject_id')
@@ -51,6 +55,7 @@ class ExamController extends Controller
 							$join->where('exam_schedules.exam_id',$exam);
 						})
 						->where('subjects.class_id',$class)
+						->where('subjects.school_id', '=', $school_id)
 			            ->get();
 			return view('backend.exam.schedule.create',compact('subjects','class','exam','type'));
 		}else{		
@@ -204,7 +209,10 @@ class ExamController extends Controller
 	}
 	
 	public function get_subject(Request $request){
-		$results = Subject::where("class_id",$request->class_id)->get();
+		$school_id = Auth::user()->school_id;
+		$results = Subject::where("class_id",$request->class_id)
+			->where('school_id', '=', $school_id)
+			->get();
         $sections = '';
         $sections .= '<option value="">'._lang('Select One').'</option>';
         foreach($results as $data){
@@ -250,9 +258,11 @@ class ExamController extends Controller
      */
     public function store(Request $request)
     {
+		$school_id = Auth::user()->school_id;
 		
 		$validator = Validator::make($request->all(), [
 			'name' => 'required|max:191',
+			'school_id'   => '',
 			'note' => ''
 		]);
 		
@@ -267,7 +277,8 @@ class ExamController extends Controller
 		}
 		
         $exam= new Exam();
-	    $exam->name = $request->input('name');
+		$exam->name = $request->input('name');
+		$exam->school_id = $school_id;
 		$exam->note = $request->input('note');
 		$exam->session_id = get_option('academic_year');
 	

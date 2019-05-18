@@ -16,6 +16,7 @@
 							<div class="form-group">
 								<label class="control-label">{{ _lang('Name') }}</label>						
 								<input type="text" class="form-control" name="name" value="{{ old('name') }}" required>
+								<input type="text" class="form-control" name="school_id" value="{{ Auth::user()->school_id }}" required hidden>
 							</div>
 							</div>
 
