@@ -16,6 +16,7 @@ use DB;
 use Validator;
 use Hash;
 use Image;
+use Auth;
 
 class StudentController extends Controller
 {
@@ -33,6 +34,7 @@ class StudentController extends Controller
 
     public function class($class='')
     {
+		$school_id = Auth::user()->school_id;
     	$class = $class;
     	$students = Student::join('users','users.id','=','students.user_id')
     	->join('student_sessions','students.id','=','student_sessions.student_id')
@@ -41,7 +43,8 @@ class StudentController extends Controller
     	->select('users.*','student_sessions.roll','classes.class_name','sections.section_name','students.id as id')						
     	->where('student_sessions.session_id',get_option('academic_year'))
     	->where('student_sessions.class_id',$class)
-    	->where('users.user_type','Student')
+		->where('users.user_type','Student')
+		->where('users.school_id', '=', $school_id)
     	->orderBy('student_sessions.roll', 'ASC')
     	->get();							
     	return view('backend.students.student-list',compact('students','class'));

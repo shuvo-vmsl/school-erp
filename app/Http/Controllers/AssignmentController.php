@@ -7,6 +7,8 @@ use App\Assignment;
 use App\User;
 use App\ClassModel;
 use Auth;
+use App\Classes;
+use DB;
 
 class AssignmentController extends Controller
 {
@@ -38,7 +40,10 @@ class AssignmentController extends Controller
                             ->where('assignments.class_id','=',$class)
                             ->orderBy('assignments.id','DESC')
                             ->get();
-        return view('backend.assignments.assignment-list',compact('assignments','class'));
+        $classes = DB::table('classes')
+                            ->where('school_id', '=', $school_id)
+                            ->get();
+        return view('backend.assignments.assignment-list',compact('assignments','classes'));
 
     }
     /**
@@ -48,7 +53,13 @@ class AssignmentController extends Controller
      */
     public function create()
     {
-        return view('backend.assignments.assignment-add');
+        $school_id = Auth::user()->school_id;
+        $classes = DB::table('classes')
+            ->where('school_id', '=', $school_id)
+            ->get();
+        
+        //  dd($classes);
+        return view('backend.assignments.assignment-add',compact('classes'));
     }
 
     /**

@@ -38,7 +38,9 @@
 									<div class="col-sm-6">
 										<select class="form-control" name="class_id" onChange="getData(this.value);" required>
 											<option value="">{{ _lang('Select One') }}</option>
-											{{ create_option('classes','id','class_name',old('class_id')) }}
+											@foreach($classes as $class) 
+												<option value="{{ $class->class_name}}">{{$class->class_name}}</option>
+											@endforeach
 										</select>
 									</div>
 								</div>
