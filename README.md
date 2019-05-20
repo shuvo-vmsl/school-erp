@@ -8,8 +8,4 @@
     <li>IOS Application</li>
 <ul>
 
-<h1>
-    TEST CASE 3
-</h1>
-
 
