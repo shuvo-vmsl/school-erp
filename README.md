@@ -1,4 +1,4 @@
-<h1>School Enterprice Solution</h1>
+<h1>Multischool School Enterprice Resource Planner</h1>
 
 <h3>Project Modules</h3>
 <ul>
